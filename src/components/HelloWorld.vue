@@ -8,8 +8,4 @@ defineProps<{ msg: string }>()
   <svg-icon name="love"></svg-icon>
 </template>
 
-<style scoped lang="scss">
-.red {
-  color: $color;
-}
-</style>
+<style scoped lang="scss"></style>
