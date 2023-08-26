@@ -4,12 +4,12 @@ defineProps<{ msg: string }>()
 </script>
 
 <template>
-  <h1>{{ msg }}</h1>
+  <h1 class="red">{{ msg }}</h1>
   <svg-icon name="love"></svg-icon>
 </template>
 
-<style scoped>
-.read-the-docs {
-  color: #888;
+<style scoped lang="scss">
+.red {
+  color: $color;
 }
 </style>
