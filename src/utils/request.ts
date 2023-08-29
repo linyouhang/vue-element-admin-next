@@ -7,6 +7,7 @@ const request = axios.create({
 
 request.interceptors.request.use(
   (config) => {
+    config.headers.token = "Admin Token"
     return config
   },
   (reason) => {
@@ -15,7 +16,7 @@ request.interceptors.request.use(
 )
 request.interceptors.response.use(
   (response) => {
-    return response
+    return response.data
   },
   (error) => {
     //处理网络错误
