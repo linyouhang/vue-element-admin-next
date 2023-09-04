@@ -25,6 +25,7 @@ interface UserInfoType {
 }
 interface User {
   checkUser: UserInfoType
+  message?: string
 }
 export interface UserInfoResponseData {
   code: number

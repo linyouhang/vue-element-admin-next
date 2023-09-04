@@ -4,13 +4,32 @@ import useUserStore from "@/store/modules/user"
 import { ElNotification } from "element-plus"
 import router from "@/router"
 import { getTime } from "@/utils/time"
-
-const loginForm = reactive({
+import type { FormRules } from "element-plus"
+interface LoginFrom {
+  username: string
+  password: string
+}
+const loginForm = reactive<LoginFrom>({
   username: "",
   password: "",
 })
 const loading = ref(false)
 const time = getTime()
+const rules = reactive<FormRules<LoginFrom>>({
+  username: [
+    { min: 3, max: 6, message: "Length should be 3 to 5", trigger: "blur" },
+    { required: true, message: "Please input Activity name", trigger: "blur" },
+  ],
+  password: [
+    { required: true, message: "请输入密码", trigger: "blur", min: 5, max: 8 },
+    {
+      min: 5,
+      max: 8,
+      message: "请输入5-8位的密码",
+      trigger: "blur",
+    },
+  ],
+})
 const userStore = useUserStore()
 const loginHandle = async () => {
   try {
@@ -34,16 +53,16 @@ const loginHandle = async () => {
 
 <template>
   <div class="login-container">
-    <el-form class="login-form">
+    <el-form class="login-form" :model="loginForm" :rules="rules">
       <h1 class="title">admin</h1>
-      <el-form-item>
+      <el-form-item prop="username">
         <el-input placeholder="username" v-model="loginForm.username">
           <template #prefix>
             <el-icon class="el-input__icon"><User /></el-icon>
           </template>
         </el-input>
       </el-form-item>
-      <el-form-item>
+      <el-form-item prop="password">
         <el-input
           placeholder="password"
           show-password

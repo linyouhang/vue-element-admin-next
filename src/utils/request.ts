@@ -1,5 +1,6 @@
 import axios from "axios"
 import { ElMessage } from "element-plus"
+import useUserStore from "@/store/modules/user"
 const request = axios.create({
   baseURL: import.meta.env.VITE_BASE_URL,
   timeout: 5000,
@@ -7,7 +8,8 @@ const request = axios.create({
 
 request.interceptors.request.use(
   (config) => {
-    config.headers.token = "Admin Token"
+    const userStore = useUserStore()
+    config.headers.token = userStore.token
     return config
   },
   (reason) => {
