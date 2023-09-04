@@ -12,14 +12,11 @@ export const routers: RouteRecordRaw[] = [
         component: () => import("@/view/home/index.vue"),
         meta: {
           title: "首页",
-          hidden: false,
           icon: "House",
         },
       },
     ],
-    meta: {
-      hidden: false,
-    },
+    meta: {},
   },
 
   {
@@ -29,7 +26,6 @@ export const routers: RouteRecordRaw[] = [
     meta: {
       title: "数据大屏",
       icon: "DataLine",
-      hidden: false,
     },
   },
   {
@@ -67,10 +63,10 @@ export const asyncRouterMap: RouteRecordRaw[] = [
     name: "Acl",
     redirect: "/acl/user",
     meta: {
-      hidden: false,
+      // hidden: false,
       icon: "Setting",
       title: "权限管理",
-      roles: ["平台管理员", "系统管理员"],
+      roles: ["超级管理员"],
     },
     children: [
       {
@@ -80,7 +76,7 @@ export const asyncRouterMap: RouteRecordRaw[] = [
         meta: {
           title: "用户管理",
           icon: "User",
-          roles: ["平台管理员", "系统管理员"],
+          roles: ["超级管理员"],
         },
       },
       {
@@ -90,7 +86,7 @@ export const asyncRouterMap: RouteRecordRaw[] = [
         meta: {
           title: "角色管理",
           icon: "UserFilled",
-          roles: ["平台管理员", "系统管理员"],
+          roles: ["超级管理员"],
         },
       },
     ],

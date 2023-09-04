@@ -1,6 +1,6 @@
 import { defineStore } from "pinia"
-import { requestLogin, requestUserInfo } from "@/api/user/index"
-import { LoginForm } from "@/api/user/type"
+import { reqLogin, reqUserInfo } from "@/api/user/index"
+import { loginFormData } from "@/api/user/type"
 import { UserState } from "../type/type"
 import { GET_TOKEN, SET_TOKEN, RM_TOKEN } from "@/utils/token"
 import { routers, asyncRouterMap } from "@/router/router"
@@ -37,28 +37,29 @@ const useUserStore = defineStore("user", {
   },
   getters: {},
   actions: {
-    async login(data: LoginForm) {
-      const result = await requestLogin(data)
+    async login(data: loginFormData) {
+      const result = await reqLogin(data)
+      console.log(result)
       //处理请求错误
       if (result.code === 200) {
-        const token = result.data.token || ""
+        const token = result.data || ""
         this.token = token
         SET_TOKEN(token)
         return result.data
       } else {
-        return Promise.reject(result.data.message)
+        return Promise.reject(result.message)
       }
     },
     async getUserInfo() {
-      const result = await requestUserInfo()
+      const result = await reqUserInfo()
       if (result.code === 200) {
-        const { checkUser: userInfo } = result.data
-        this.username = userInfo.username
+        const { data: userInfo } = result
+        this.username = userInfo.name
         this.avatar = userInfo.avatar
         this.roles = userInfo.roles
         return userInfo
       } else {
-        return Promise.reject(result.data.message)
+        return Promise.reject(result.message)
       }
     },
     async logout() {

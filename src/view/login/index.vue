@@ -10,8 +10,8 @@ interface LoginFrom {
   password: string
 }
 const loginForm = reactive<LoginFrom>({
-  username: "",
-  password: "",
+  username: "admin",
+  password: "atguigu123",
 })
 const loading = ref(false)
 const time = getTime()
@@ -21,13 +21,13 @@ const rules = reactive<FormRules<LoginFrom>>({
     { required: true, message: "Please input Activity name", trigger: "blur" },
   ],
   password: [
-    { required: true, message: "请输入密码", trigger: "blur", min: 5, max: 8 },
     {
       min: 5,
       max: 8,
       message: "请输入5-8位的密码",
       trigger: "blur",
     },
+    { required: true, message: "请输入密码", trigger: "blur", min: 5, max: 8 },
   ],
 })
 const userStore = useUserStore()
