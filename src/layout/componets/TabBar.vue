@@ -1,9 +1,26 @@
 <script setup lang="ts">
 import useSetttingStore from "@/store/modules/setting"
 import useUserStore from "@/store/modules/user"
-import { nextTick } from "vue"
+import { nextTick, ref } from "vue"
 import { useRoute, useRouter } from "vue-router"
-
+let dark = ref<boolean>(false)
+const color = ref("rgba(255, 69, 0, 0.68)")
+const predefineColors = ref([
+  "#ff4500",
+  "#ff8c00",
+  "#ffd700",
+  "#90ee90",
+  "#00ced1",
+  "#1e90ff",
+  "#c71585",
+  "rgba(255, 69, 0, 0.68)",
+  "rgb(255, 120, 0)",
+  "hsv(51, 100, 98)",
+  "hsva(120, 40, 94, 0.5)",
+  "hsl(181, 100%, 37%)",
+  "hsla(209, 100%, 56%, 0.73)",
+  "#c7158577",
+])
 const userStore = useUserStore()
 const $route = useRoute()
 const $router = useRouter()
@@ -23,6 +40,19 @@ const fullScreenHandle = () => {
   } else {
     document.exitFullscreen()
   }
+}
+//主题颜色的设置
+const setColor = () => {
+  //通知js修改根节点的样式对象的属性与属性值
+  const html = document.documentElement
+  html.style.setProperty("--el-color-primary", color.value)
+}
+//switch开关的chang事件进行暗黑模式的切换
+const changeDark = () => {
+  //获取HTML根节点
+  let html = document.documentElement
+  //判断HTML标签是否有类名dark
+  dark.value ? (html.className = "dark") : (html.className = "")
 }
 const logout = () => {
   userStore.logout()
@@ -49,9 +79,51 @@ const logout = () => {
       </el-breadcrumb>
     </div>
     <div class="tabbar_right">
-      <el-icon @click="refreshHandle"><Refresh /></el-icon>
-      <el-icon @click="fullScreenHandle"><FullScreen /></el-icon>
-      <el-icon><Setting /></el-icon>
+      <el-button
+        @click="refreshHandle"
+        size="small"
+        icon="Refresh"
+        circle
+      ></el-button>
+      <el-button
+        @click="fullScreenHandle"
+        size="small"
+        icon="FullScreen"
+        circle
+      ></el-button>
+      <el-popover
+        placement="bottom"
+        title="主题设置"
+        :width="300"
+        trigger="hover"
+      >
+        <!-- 表单元素 -->
+        <el-form>
+          <el-form-item label="主题颜色">
+            <el-color-picker
+              @change="setColor"
+              v-model="color"
+              size="small"
+              show-alpha
+              :predefine="predefineColors"
+            />
+          </el-form-item>
+          <el-form-item label="暗黑模式">
+            <el-switch
+              @change="changeDark"
+              v-model="dark"
+              class="mt-2"
+              style="margin-left: 24px"
+              inline-prompt
+              active-icon="MoonNight"
+              inactive-icon="Sunny"
+            />
+          </el-form-item>
+        </el-form>
+        <template #reference>
+          <el-button size="small" icon="Setting" circle></el-button>
+        </template>
+      </el-popover>
       <el-avatar :src="userStore.avatar" :size="20" />
       <el-dropdown>
         <span class="el-dropdown-link">

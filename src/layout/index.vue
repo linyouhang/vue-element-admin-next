@@ -49,7 +49,6 @@ const settingStore = useSetttingStore()
     }
   }
   .navBar {
-    background-color: $neutral-color-5;
     width: calc(100% - $menu-width);
     position: fixed;
     top: 0px;
