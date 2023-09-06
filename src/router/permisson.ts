@@ -1,6 +1,11 @@
 import router from "./index"
 import useUserStore from "@/store/modules/user"
+//@ts-expect-error  nprogress不支持es语法
+import NProgress from "NProgress"
+import "nprogress/nprogress.css"
+
 router.beforeEach(async (to) => {
+  NProgress.start()
   const userStore = useUserStore()
   if (userStore.token) {
     //token存在
@@ -27,4 +32,7 @@ router.beforeEach(async (to) => {
     }
     return { name: "login" }
   }
+})
+router.afterEach(() => {
+  NProgress.done()
 })
