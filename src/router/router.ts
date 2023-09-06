@@ -18,16 +18,6 @@ export const routers: RouteRecordRaw[] = [
     ],
     meta: {},
   },
-
-  {
-    path: "/screen",
-    name: "Screen",
-    component: () => import("@/view/screen/index.vue"),
-    meta: {
-      title: "数据大屏",
-      icon: "DataLine",
-    },
-  },
   {
     path: "/login",
     component: () => import("@/view/login/index.vue"),

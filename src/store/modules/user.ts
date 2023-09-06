@@ -52,6 +52,7 @@ const useUserStore = defineStore("user", {
     },
     async getUserInfo() {
       const result = await reqUserInfo()
+      console.log(result)
       if (result.code === 200) {
         const { data: userInfo } = result
         this.username = userInfo.name
@@ -69,9 +70,9 @@ const useUserStore = defineStore("user", {
       this.roles = []
     },
     generateRoutes() {
-      // console.log(this.roles)
       let accessedRoutes
-      if (this.roles.includes("系统管理员")) {
+      //根据角色权限生成路由表
+      if (this.roles.includes("")) {
         accessedRoutes = asyncRouterMap
       } else {
         accessedRoutes = filterAsyncRoutes(asyncRouterMap, this.roles)
